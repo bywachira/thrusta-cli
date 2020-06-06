@@ -1,44 +1,47 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
+	"sort"
 
-	"github.com/urfave/cli"
+	"github.com/tesh254/thrusta/commandline"
+
+	"github.com/urfave/cli/v2"
 )
 
-var app = cli.NewApp()
+func main() {
+	app := &cli.App{
+		Commands: []*cli.Command{
+			{
+				Name:    "login",
+				Aliases: []string{"a"},
+				Usage:   "add a task to the list",
+				Action: func(c *cli.Context) error {
+					email := c.Args().Get(0)
+					commands := commandline.CLI{}
 
-var pizza = []string{"Enjoy your pizza with some delicious"}
-
-var version string = "1.0.0"
-
-// Info shows CLI info
-func Info() {
-	app.Name = "Thrusta"
-	app.Usage = "Ping me from anywhere"
-	app.Author = "Wachira"
-	app.Version = version
-}
-
-// Commands defines CLI commands
-func Commands() {
-	app.Commands = []cli.Command{
-		{
-			Name:    "version",
-			Aliases: []string{"--version", "-v"},
-			Usage:   "Check version",
-			Action: func(c *cli.Context) {
-				fmt.Println("Thrusta version " + version)
+					commands.LoginAction(email)
+					return nil
+				},
 			},
+			// {
+			// 	Name: "run",
+			// 	Aliases: []string{"r"},
+			// 	Usage: "run a test background process",
+			// 	Action: func(c *cli.Context) error {
+			// 		cron := cron.CronMethods{}
+
+			// 		go cron.Test()
+			// 		return nil
+			// 	},
+			// },
 		},
 	}
-}
 
-func main() {
-	Info()
-	Commands()
+	sort.Sort(cli.FlagsByName(app.Flags))
+	sort.Sort(cli.CommandsByName(app.Commands))
+
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
