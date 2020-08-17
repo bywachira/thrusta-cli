@@ -42,8 +42,11 @@ func main() {
 	sort.Sort(cli.FlagsByName(app.Flags))
 	sort.Sort(cli.CommandsByName(app.Commands))
 
-	err := app.Run(os.Args)
-	if err != nil {
-		log.Fatal(err)
+	commandline.Run(`code .`)
+
+	_err := app.Run(os.Args)
+	
+	if _err != nil {
+		log.Fatal(_err)
 	}
 }
