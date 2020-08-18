@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/howeyc/gopass"
@@ -34,6 +35,11 @@ type AccessCredentials struct {
 // LoginRequest sends POST login request
 func (c *CLI) LoginRequest(email string, password string) {
 	fmt.Println("Initializing login...")
+
+	if len(email) == 0 {
+		log.Fatal("Please provide email")
+	}
+
 	jsonData := map[string]string{"email": email, "password": password}
 	jsonValue, _ := json.Marshal(jsonData)
 	request, _ := http.NewRequest("POST", "http://localhost:5000/api/v1/login/node", bytes.NewBuffer(jsonValue))

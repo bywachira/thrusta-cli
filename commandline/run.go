@@ -22,6 +22,13 @@ func Run(order string) {
 	RunProcess(root, orderArgs, false)
 }
 
+// RunAllProcesses handles running all processes in an array
+func RunAllProcesses(processes []string) {
+	for _, element := range processes {
+		Run(element)
+	}
+}
+
 // RunProcess handles running command
 func RunProcess(path string, args []string, debug bool) (out string, err error) {
 
