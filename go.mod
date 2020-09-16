@@ -3,6 +3,7 @@ module github.com/tesh254/thrusta
 go 1.14
 
 require (
+	github.com/cheekybits/genny v1.0.0
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/graarh/golang-socketio v0.0.0-20170510162725-2c44953b9b5f
 	github.com/howeyc/gopass v0.0.0-20190910152052-7cb4b85ec19c
