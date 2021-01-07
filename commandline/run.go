@@ -45,12 +45,13 @@ func RunProcess(path string, args []string, debug bool, sendLogs func(logs strin
 	// Fields end
 
 	cmd := exec.Command(path, args...)
+	cmd.Dir = "/usr/bin"
 
 	var b []byte
 
 	b, err = cmd.CombinedOutput()
 
-	statStatus := "[INFO] Process has been initialized  \n"
+	statStatus := "[INFO] Process has been initialized <" + path + ">" + "\n"
 
 	sendLogs(statStatus, nodeID, processID, "info")
 
