@@ -8,6 +8,8 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/tesh254/thrusta-cli/monitor"
+
 	"github.com/tesh254/thrusta-cli/config"
 	"github.com/tesh254/thrusta-cli/helpers"
 
@@ -46,6 +48,10 @@ func RunServer() {
 
 	var req Requests
 
+	helpers.Interval(func() {
+		monitor.SendMonitorData()
+	}, 300*time.Second)
+
 	go func() {
 		defer close(done)
 		for {
@@ -54,7 +60,6 @@ func RunServer() {
 				log.Println("read:", err)
 				return
 			}
-			log.Printf("recv: %s", message)
 
 			var response Processes
 
@@ -73,7 +78,6 @@ func RunServer() {
 			return
 		case <-ticker.C:
 			err := c.WriteMessage(websocket.TextMessage, []byte(sendCredentials()))
-			
 
 			if err != nil {
 				log.Println("write:", err)
