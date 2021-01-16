@@ -41,7 +41,10 @@ func RunServer() {
 	c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 	if err != nil {
 		log.Fatal("dial:", err)
+
+		// c, _, _ = websocket.DefaultDialer.Dial(u.String(), nil)
 	}
+
 	defer c.Close()
 
 	done := make(chan struct{})
@@ -58,7 +61,9 @@ func RunServer() {
 			_, message, err := c.ReadMessage()
 			if err != nil {
 				log.Println("read:", err)
-				return
+				time.Sleep(120 * time.Second)
+
+				c, _, _ = websocket.DefaultDialer.Dial(u.String(), nil)
 			}
 
 			var response Processes
@@ -81,6 +86,9 @@ func RunServer() {
 
 			if err != nil {
 				log.Println("write:", err)
+				time.Sleep(120 * time.Second)
+
+				c, _, _ = websocket.DefaultDialer.Dial(u.String(), nil)
 				return
 			}
 		case <-interrupt:

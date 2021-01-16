@@ -2,14 +2,13 @@ package config
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 )
 
 // Config defines the cli config
 type Config struct {
-	SSL bool   `json:"ssl"`
-	URL string `json:"url"`
+	SSL  bool   `json:"ssl"`
+	URL  string `json:"url"`
 	Path string `json:"path"`
 }
 
@@ -20,8 +19,6 @@ func ReadConfig() Config {
 	data := Config{}
 
 	_ = json.Unmarshal([]byte(file), &data)
-
-	fmt.Println(data)
 
 	return data
 }
@@ -36,5 +33,3 @@ func ProtocolChecker() string {
 		return "ws"
 	}
 }
-
-

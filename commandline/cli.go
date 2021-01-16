@@ -29,7 +29,7 @@ func SetupCLI() *cli.App {
 				Aliases: []string{"r"},
 				Usage:   "run a test background process",
 				Action: func(c *cli.Context) error {
-					RunServer()
+					InitWebsocketClient()
 					return nil
 				},
 			},
