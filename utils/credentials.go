@@ -2,7 +2,9 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"time"
 )
@@ -23,4 +25,28 @@ func CreateCredentialsFile(token string, uid string) {
 	jsonData, _ := json.Marshal(data)
 
 	ioutil.WriteFile("thrusta-credentials.json", jsonData, os.ModePerm)
+}
+
+func ReadCredentialsFile() CredentialsConfiguration {
+	jsonFile, err := os.Open("thrusta-credentials.json")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Successfully opened credentials file")
+
+	defer jsonFile.Close()
+
+	byteValue, err := ioutil.ReadAll(jsonFile)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var credentials CredentialsConfiguration
+
+	json.Unmarshal(byteValue, &credentials)
+
+	return credentials
 }

@@ -52,20 +52,14 @@ func (c *CLI) SetupCLI() *cli.App {
 					ticker := time.NewTicker(5 * time.Second)
 
 					quit := make(chan struct{})
-
-					// go func() {
 					for {
 						select {
 						case <-ticker.C:
 							LocalTCP.ConnectToBackend()
 						case <-quit:
 							ticker.Stop()
-							// return
 						}
 					}
-					// }()
-
-					// return nil
 				},
 			},
 			{
