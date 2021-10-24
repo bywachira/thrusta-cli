@@ -1,6 +1,8 @@
 package status
 
 import (
+	"fmt"
+
 	sigar "github.com/cloudfoundry/gosigar"
 	"github.com/mackerelio/go-osstat/cpu"
 	"github.com/mackerelio/go-osstat/uptime"
@@ -12,10 +14,10 @@ type Statistics struct {
 	SwapUsed        uint64 `json:"swap_used"`
 	SwapTotal       uint64 `json:"swap_total"`
 	Uptime          int64  `json:"uptime"`
-	MemoryUsed      uint64 `json:"memory_used"`
-	MemoryAvailable uint64 `json:"memory_available"`
-	MemoryTotal     uint64 `json:"memory_total"`
-	MemoryCached    uint64 `json:"memory_cached"`
+	MemoryUsed      uint64 `json:"ram_used"`
+	MemoryAvailable uint64 `json:"ram_available"`
+	MemoryTotal     uint64 `json:"ram_total"`
+	MemoryCached    uint64 `json:"ram_cached"`
 	CPUUsed         uint64 `json:"cpu_used"`
 	CPUTotal        uint64 `json:"cpu_total"`
 	CPUFree         uint64 `json:"cpu_free"`
@@ -27,6 +29,8 @@ func GetSystemStats() Statistics {
 	uptime, _ := uptime.Get()
 	memory, _ := mem.VirtualMemory()
 	cpu, _ := cpu.Get()
+
+	fmt.Println(memory.Total)
 
 	// swap.Get()
 
